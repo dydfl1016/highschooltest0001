@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>25년 10월 모고 20번 - Interactive Quiz (5문항)</title>
+    <title>25년 10월 모고 20번 - Interactive Quiz (6문항)</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -165,10 +165,10 @@
 <div class="container">
     <h1 style="text-align: center; color: #00bcd4;">📖 25년 10월 모고 20번 - 관계 유지</h1>
     <p style="text-align:center; color:#607d8b; margin-bottom:25px;">
-        
+        각 문제마다 지문 전체가 보이고, 그 문제에 필요한 밑줄·표시만 다르게 적용됩니다.
     </p>
 
-    <h2 style="color: #455a64;">💡 다음 글을 읽고 물음에 답하시오 (5문항)</h2>
+    <h2 style="color: #455a64;">💡 다음 글을 읽고 물음에 답하시오 (6문항)</h2>
     <div id="quizContainer"></div>
 
     <button id="nextButton" onclick="loadNextQuestion()">다음 문제</button>
@@ -182,7 +182,7 @@
 </div>
 
 <script>
-    // 5문항 각각에 맞는 "지문 버전" 준비
+    // 6문항 각각에 맞는 "지문 버전" 준비
     const passages = {
         // 1번: 아무 서식 없는 기본 지문 (요지)
         plain: `
@@ -220,7 +220,7 @@ This shows
 that you’re thinking of them and are invested in maintaining
 the relationship.`,
 
-        // 3번: 어휘 문제용 - 단어 기준 밑줄 + ①~⑤
+        // 3번: 어휘 문제용 - 단어 기준 밑줄 + ①~⑤ (1번 free는 일부러 어색하게 가정)
         vocab: `
 One of the most important aspects of sustaining long-term
 relationships is communication. It’s easy to connect with someone
@@ -275,10 +275,29 @@ resource that you think might interest a connection, share <u>it</u>
 with them, even if you haven’t spoken in a while.
 This shows
 that you’re thinking of them and are invested in maintaining
+the relationship.`,
+
+        // 6번: constantly / consistent 비교용 - 두 단어만 밑줄
+        constCompare: `
+One of the most important aspects of sustaining long-term
+relationships is communication. It’s easy to connect with someone
+and then let the relationship get stuck due to a lack of follow-up.
+To keep the connection alive, make a conscious effort to stay
+in touch.
+This doesn’t mean <u>constantly</u> reaching out with requests
+or updates but rather maintaining a friendly and <u>consistent</u> line
+of communication.
+A simple message to check in or share
+something of value can go a long way in reinforcing your
+relationship. For example, if you come across an article or
+resource that you think might interest a connection, share it
+with them, even if you haven’t spoken in a while.
+This shows
+that you’re thinking of them and are invested in maintaining
 the relationship.`
     };
 
-    // 5문항 데이터
+    // 6문항 데이터
     const questions = [
         // 1. 요지
         {
@@ -312,7 +331,7 @@ the relationship.`
             ],
             explanation: "사역동사 let 뒤에는 목적어 + 동사원형이 와야 하므로 getting이 아니라 get이 와야 합니다. 나머지 표현들은 문맥과 문법상 자연스럽습니다."
         },
-        // 3. 어휘
+        // 3. 어휘 (free 오답 유도)
         {
             id: 3,
             type: "어휘",
@@ -326,7 +345,7 @@ the relationship.`
                 "④ consistent",
                 "⑤ reinforcing"
             ],
-            explanation: "관계는 follow-up 부족으로 '멈춰버리는 것(get stuck)'이 자연스럽습니다. 만약 free(자유로운)가 들어가면 '관계가 자유롭게 된다'는 이상한 의미가 되어 문맥상 어색합니다."
+            explanation: "관계는 follow-up 부족으로 '멈춰버리는 것(get stuck)'이 자연스럽습니다. free(자유로운)가 들어가면 '관계가 자유롭게 된다'는 이상한 의미가 되어 문맥상 어색합니다."
         },
         // 4. 문장 삽입
         {
@@ -357,6 +376,22 @@ the relationship.`
                 "a lack of follow-up"
             ],
             explanation: "share it with them에서 it은 바로 앞에 나온 an article or resource를 대신하는 대명사입니다."
+        },
+        // 6. 어휘 (constantly vs consistent 비교)
+        {
+            id: 6,
+            type: "어휘",
+            title: "밑줄 친 constantly와 consistent에 대한 설명으로 가장 적절한 것은?",
+            passageKey: "constCompare",
+            answer: 3,
+            options: [
+                "두 단어 모두 '변함없이 계속되는'이라는 같은 의미로, 글에서는 동일한 뉘앙스로 사용되었다.",
+                "constantly는 '의미 있는 내용을 자주 전하는 것'을, consistent는 '거의 연락하지 않는 태도'를 뜻한다.",
+                "constantly는 '(이유 없이) 자꾸, 계속'에 초점이 있고, consistent는 '태도·방식이 한결같고 일관된' 상태에 초점이 있다.",
+                "두 단어 모두 '관계를 끊다'는 부정적인 의미를 강조하며, 글에서는 연락하지 말라는 뜻으로 쓰였다.",
+                "constantly는 '연락의 질'을, consistent는 '연락의 횟수'를 강조하는 표현이다."
+            ],
+            explanation: "constantly는 빈도·집요함, 즉 '자꾸, 계속'이라는 느낌이고, consistent는 '태도·방식이 한결같고 안정적인' 상태를 가리킵니다. 글에서도 '끊임없이 요청만 보내는 것'은 피하고, '한결같고 안정된 소통'을 유지하라고 대비해 사용하고 있습니다."
         }
     ];
 
@@ -498,5 +533,6 @@ ${passages[q.passageKey]}
 
 </body>
 </html>
+
 
 
