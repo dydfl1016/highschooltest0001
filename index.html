@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>고1 내신 문제 풀이 (Interactive Quiz)</title>
+    <title>25년 10월 모고 20번 - Interactive Quiz (5문항)</title>
     <style>
-        /* 기본 스타일 */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f4f7f6;
@@ -19,7 +18,7 @@
             background-color: #fff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         h1, h2 {
             margin-top: 0;
@@ -39,6 +38,10 @@
             text-decoration-color: #00bcd4;
             font-weight: bold;
         }
+        .circled {
+            font-weight: bold;
+            color: #00796b;
+        }
 
         /* 퀴즈 카드 */
         .quiz-card {
@@ -55,28 +58,16 @@
             padding-bottom: 8px;
         }
 
-        /* 문제별 추가 정보 박스 */
+        /* 주어진 문장 / 추가 정보 */
         .extra {
             background-color: #fffde7;
             border-left: 4px solid #ffb300;
             padding: 10px;
             margin: 10px 0 15px 0;
-        }
-        .extra h4 {
-            margin: 0 0 6px 0;
             font-size: 14px;
+        }
+        .extra strong {
             color: #fb8c00;
-        }
-        .extra p {
-            margin: 2px 0;
-        }
-
-        /* 주어진 문장 박스 */
-        .given-sentence {
-            background-color: #fff3e0;
-            border-left: 4px solid #ff9800;
-            padding: 10px;
-            margin: 10px 0 15px 0;
         }
 
         /* 보기 버튼 */
@@ -172,270 +163,200 @@
 <body>
 
 <div class="container">
-    <h1 style="text-align: center; color: #00bcd4;">📖 25년 10월 모고 20번 지문 - 관계 유지</h1>
+    <h1 style="text-align: center; color: #00bcd4;">📖 25년 10월 모고 20번 - 관계 유지</h1>
     <p style="text-align:center; color:#607d8b; margin-bottom:25px;">
-        각 문제 카드 상단에 지문 전체가 다시 보이도록 구성했습니다.
+        각 문제마다 지문 전체가 보이고, 그 문제에 필요한 밑줄·번호 표시만 다르게 적용됩니다.
     </p>
 
-    <h2 style="color: #455a64;">💡 문제 풀이 (총 13문항)</h2>
+    <h2 style="color: #455a64;">💡 문제 풀이 (5문항)</h2>
     <div id="quizContainer"></div>
 
     <button id="nextButton" onclick="loadNextQuestion()">다음 문제</button>
 
     <div id="results" style="display: none;">
         <h2 style="color: #00bcd4;">🎉 풀이 완료!</h2>
-        <h3 style="color: #263238;">📋 전체 정답표 및 정답 해설 요약</h3>
+        <h3 style="color: #263238;">📋 전체 정답표</h3>
         <p id="scoreDisplay"></p>
         <div id="summary"></div>
     </div>
 </div>
 
 <script>
-    // 공통 지문 HTML (모든 문제 카드 상단에 공통으로 들어감)
-    const passageHTML = `
+    // 5문항 각각에 맞는 "지문 버전" 준비
+    const passages = {
+        // 1번: 아무 서식 없는 기본 지문 (요지)
+        plain: `
 One of the most important aspects of sustaining long-term
-relationships is communication. [ ① ] It’s easy to connect with someone
-and then let the relationship get <u>stuck</u> due to a lack of follow-up.
-[ ② ] To keep the connection alive, make a <u>conscious</u> effort to stay
+relationships is communication. It’s easy to connect with someone
+and then let the relationship get stuck due to a lack of follow-up.
+To keep the connection alive, make a conscious effort to stay
 in touch.
-This doesn’t mean <u>constantly</u> reaching out with requests
-or updates but rather maintaining a friendly and <u>consistent</u> line
+This doesn’t mean constantly reaching out with requests
+or updates but rather maintaining a friendly and consistent line
 of communication.
-[ ③ ] A simple message to check in or share
-something of value can go a long way in <u>reinforcing</u> your
+A simple message to check in or share
+something of value can go a long way in reinforcing your
+relationship. For example, if you come across an article or
+resource that you think might interest a connection, share it
+with them, even if you haven’t spoken in a while.
+This shows
+that you’re thinking of them and are invested in maintaining
+the relationship.`,
+
+        // 2번: 어법 문제용 - 밑줄 + 앞에 ①~⑤ (문장/구 단위)
+        grammar: `
+One of the most important aspects of <u><span class="circled">①</span> sustaining long-term relationships</u>
+is communication. It’s easy to connect with someone
+and then <u><span class="circled">②</span> let the relationship getting stuck</u> due to a lack of follow-up.
+To keep the connection alive, <u><span class="circled">③</span> make a conscious effort to stay in touch</u>.
+This doesn’t mean <u><span class="circled">④</span> constantly reaching out with requests or updates</u>
+but rather <u><span class="circled">⑤</span> maintaining a friendly and consistent line of communication</u>.
+A simple message to check in or share
+something of value can go a long way in reinforcing your
+relationship. For example, if you come across an article or
+resource that you think might interest a connection, share it
+with them, even if you haven’t spoken in a while.
+This shows
+that you’re thinking of them and are invested in maintaining
+the relationship.`,
+
+        // 3번: 어휘 문제용 - 단어 기준 밑줄 + ①~⑤
+        vocab: `
+One of the most important aspects of sustaining long-term
+relationships is communication. It’s easy to connect with someone
+and then let the relationship get <u><span class="circled">①</span> stuck</u> due to a lack of follow-up.
+To keep the connection alive, make a <u><span class="circled">②</span> conscious</u> effort to stay
+in touch.
+This doesn’t mean <u><span class="circled">③</span> constantly</u> reaching out with requests
+or updates but rather maintaining a friendly and <u><span class="circled">④</span> consistent</u> line
+of communication.
+A simple message to check in or share
+something of value can go a long way in <u><span class="circled">⑤</span> reinforcing</u> your
+relationship. For example, if you come across an article or
+resource that you think might interest a connection, share it
+with them, even if you haven’t spoken in a while.
+This shows
+that you’re thinking of them and are invested in maintaining
+the relationship.`,
+
+        // 4번: 문장 삽입용 - [①]~[⑤] 위치 표시
+        insertion: `
+One of the most important aspects of sustaining long-term
+relationships is communication. [①] It’s easy to connect with someone
+and then let the relationship get stuck due to a lack of follow-up.
+[②] To keep the connection alive, make a conscious effort to stay
+in touch.
+[③] This doesn’t mean constantly reaching out with requests
+or updates but rather maintaining a friendly and consistent line
+of communication.
+[④] A simple message to check in or share
+something of value can go a long way in reinforcing your
+relationship. For example, if you come across an article or
+resource that you think might interest a connection, share it
+with them, even if you haven’t spoken in a while.
+[⑤] This shows
+that you’re thinking of them and are invested in maintaining
+the relationship.`,
+
+        // 5번: 지시어 it 용 - it만 밑줄
+        pronoun: `
+One of the most important aspects of sustaining long-term
+relationships is communication. It’s easy to connect with someone
+and then let the relationship get stuck due to a lack of follow-up.
+To keep the connection alive, make a conscious effort to stay
+in touch.
+This doesn’t mean constantly reaching out with requests
+or updates but rather maintaining a friendly and consistent line
+of communication.
+A simple message to check in or share
+something of value can go a long way in reinforcing your
 relationship. For example, if you come across an article or
 resource that you think might interest a connection, share <u>it</u>
 with them, even if you haven’t spoken in a while.
-[ ④ ] This shows
-that you’re thinking of them and are <u>invested</u> in maintaining
-the relationship.
-[ ⑤ ]
-    `;
+This shows
+that you’re thinking of them and are invested in maintaining
+the relationship.`
+    };
 
-    // 문제 데이터
+    // 5문항 데이터
     const questions = [
+        // 1. 요지
         {
             id: 1,
-            type: "요지/주장",
+            type: "요지",
             title: "위 글의 요지로 가장 적절한 것은?",
+            passageKey: "plain",
             answer: 2,
             options: [
-                "오랜 관계 유지를 위해 정기적인 만남이 필수적이다.",
-                "장기적인 관계 유지를 위해 지속적이고 의식적인 소통 노력이 중요하다.",
-                "상대방의 관심사를 파악하여 그에 맞는 정보를 제공해야 한다.",
-                "관계가 소원해지는 것을 막기 위해 사소한 부탁이라도 거절하지 말아야 한다.",
-                "대면 소통보다 비대면 소통이 관계 강화에 더 효과적일 수 있다."
+                "관계를 유지하려면 정기적인 대면 만남이 가장 중요하다.",
+                "장기적인 관계 유지를 위해 의식적이고 일관된 소통 노력이 필요하다.",
+                "상대방의 관심사를 정확히 파악하는 것이 관계 유지의 핵심이다.",
+                "관계를 유지하려면 먼저 도움을 요청하는 것이 중요하다.",
+                "관계를 유지하려면 특별한 이벤트에만 연락하는 것이 효과적이다."
             ],
-            explanation: "글의 핵심은 장기적인 관계 유지를 위해 의식적인 노력(conscious effort)을 통해 친밀하고 일관된 소통(consistent line of communication)을 유지해야 한다는 점입니다."
+            explanation: "글 전체에서 반복적으로 강조하는 것은 '의식적인(conscious) 노력'과 '친근하고 일관된 소통(friendly and consistent line of communication)'을 통해 관계를 장기적으로 유지해야 한다는 점입니다."
         },
+        // 2. 어법
         {
             id: 2,
-            type: "문법/어법",
-            title: "다음 중 어법상 옳지 않은 것은? (가정: let the relationship getting stuck으로 바꾸었을 때)",
-            extra: `
-                <p>본문 중 다음 부분을 보자.</p>
-                <p style="margin-left:10px;">... and then let the relationship get <u>stuck</u> due to a lack of follow-up.</p>
-            `,
+            type: "어법",
+            title: "다음 밑줄 친 부분 중, 어법상 옳지 않은 것은?",
+            passageKey: "grammar",
             answer: 2,
             options: [
-                "sustaining long-term relationships",
-                "letting the relationship getting stuck",
-                "reaching out with requests or updates",
-                "maintaining a friendly and consistent line",
-                "reinforcing your relationship"
+                "① sustaining long-term relationships",
+                "② let the relationship getting stuck",
+                "③ make a conscious effort to stay in touch",
+                "④ constantly reaching out with requests or updates",
+                "⑤ maintaining a friendly and consistent line of communication"
             ],
-            explanation: "사역동사 let 뒤에는 목적어 + 동사원형이 와야 하므로 get이 와야 합니다. getting stuck은 어법상 옳지 않습니다."
+            explanation: "사역동사 let 뒤에는 목적어 + 동사원형이 와야 하므로 getting이 아니라 get이 와야 합니다. 나머지 표현들은 문맥과 문법상 자연스럽습니다."
         },
+        // 3. 어휘
         {
             id: 3,
             type: "어휘",
-            title: "다음 밑줄 친 단어의 쓰임으로 볼 때, 문맥상 가장 어색한 것은? (가정: stuck 대신 free가 들어간 경우)",
-            extra: `
-                <p>본문: ... let the relationship get <u>stuck</u> due to a lack of follow-up.</p>
-                <p>관계가 후속 조치 부족으로 '정체되는 것'이 자연스러운 문맥입니다.</p>
-            `,
+            title: "다음 밑줄 친 단어의 쓰임으로 볼 때, 문맥상 가장 어색한 것은? (가정: ①에 free가 들어갔다고 할 때)",
+            passageKey: "vocab",
             answer: 1,
             options: [
-                "stuck (자유롭다는 의미의 free로 바뀌었다고 가정할 때)",
-                "conscious",
-                "constantly",
-                "consistent",
-                "reinforcing"
+                "① stuck (free로 바뀌었다고 가정할 경우)",
+                "② conscious",
+                "③ constantly",
+                "④ consistent",
+                "⑤ reinforcing"
             ],
-            explanation: "관계는 follow-up 부족으로 '멈춰버리는 것(get stuck)'이 자연스러운 문맥입니다. 만약 free가 들어간다면 의미상 어색합니다."
+            explanation: "관계는 follow-up 부족으로 '멈춰버리는 것(get stuck)'이 자연스럽습니다. 만약 free(자유로운)가 들어가면 '관계가 자유롭게 된다'는 이상한 의미가 되어 문맥상 어색합니다."
         },
+        // 4. 문장 삽입
         {
             id: 4,
-            type: "빈칸 추론",
-            title: "빈칸에 들어갈 말로 가장 적절한 것은?",
-            extra: `
-                <p class="given-sentence">
-                    This doesn’t mean constantly reaching out with requests or updates but rather ______ of communication.
-                </p>
-            `,
-            answer: 2,
-            options: [
-                "establishing a temporary and informal method",
-                "maintaining a friendly and consistent line",
-                "setting up a formal channel for negotiation",
-                "avoiding contact until a significant event occurs",
-                "focusing on the frequency over the quality"
-            ],
-            explanation: "본문에서 강조하는 것은 '끊임없는 요청'이 아니라 '친근하고 일관된 소통 라인'을 유지하는 것입니다."
-        },
-        {
-            id: 5,
-            type: "빈칸 추론",
-            title: "밑줄에 공통으로 들어갈 말로 가장 적절한 것은?",
-            extra: `
-                <p class="given-sentence">
-                    A simple message ... can go a long way in ______ your relationship.
-                </p>
-            `,
-            answer: 5,
-            options: [
-                "restoring the initial formality of",
-                "reducing the emotional burden in",
-                "demanding more commitment for",
-                "preventing the inevitable ending of",
-                "reinforcing the foundation of"
-            ],
-            explanation: "간단한 메시지나 자료 공유는 관계를 강화(reinforcing)하는 데 도움을 주며, 관계의 '기초(foundation)'를 다진다는 의미와 잘 맞습니다."
-        },
-        {
-            id: 6,
-            type: "문단 배열",
-            title: "주어진 글 다음에 이어질 (A), (B), (C)의 순서로 가장 적절한 것은?",
-            extra: `
-                <div class="extra">
-                    <h4>(A), (B), (C) 읽기</h4>
-                    <p><strong>(A)</strong> For instance, you might send a short message on their birthday or share a helpful article you recently read.</p>
-                    <p><strong>(B)</strong> These small gestures signal that you still value the connection, which makes it easier to deepen the relationship later.</p>
-                    <p><strong>(C)</strong> Building strong relationships doesn’t happen by accident; it requires intentional effort over time.</p>
-                </div>
-            `,
-            answer: 4,
-            options: [
-                "(A)-(C)-(B)",
-                "(B)-(A)-(C)",
-                "(B)-(C)-(A)",
-                "(C)-(A)-(B)",
-                "(A)-(B)-(C)"
-            ],
-            explanation: "먼저 관계는 우연히 유지되는 것이 아니라 의도적 노력이 필요하다(C) → 예시 제시(A) → 그 예시의 의미/효과 설명(B) 순서가 자연스럽습니다."
-        },
-        {
-            id: 7,
             type: "문장 삽입",
-            title: "주어진 문장이 들어가기에 가장 적절한 곳은?",
+            title: "다음 문장이 들어가기에 가장 적절한 위치는?",
+            passageKey: "insertion",
             extra: `
-                <div class="given-sentence">
-                    <strong>[주어진 문장]</strong><br>
-                    This doesn’t mean constantly reaching out with requests or updates but rather maintaining a friendly and consistent line of communication.
-                </div>
-                <p>지문 속 [ ① ] ~ [ ⑤ ] 위치를 참고하여 고르시오.</p>
+                <strong>[주어진 문장]</strong><br>
+                This doesn’t mean constantly reaching out with requests or updates but rather maintaining a friendly and consistent line of communication.
             `,
             answer: 3,
             options: ["①", "②", "③", "④", "⑤"],
-            explanation: "주어진 문장은 '의식적인 노력(conscious effort)'이 어떤 모습인지 구체적으로 설명합니다. 따라서 그 설명이 이어지는 위치인 [ ③ ] 앞이 가장 자연스럽습니다."
+            explanation: "주어진 문장은 '이것은 끊임없는 요청을 의미하는 것이 아니라, 친근하고 일관된 소통 라인을 유지하는 것'이라고 설명합니다. 앞 문장에서 conscious effort(의식적인 노력)를 말하고, 그 노력이 구체적으로 어떤 모습인지 설명하는 위치, 즉 [③] 자리가 가장 자연스럽습니다."
         },
+        // 5. 지시어 it
         {
-            id: 8,
-            type: "지시어/대명사",
+            id: 5,
+            type: "지시어",
             title: "밑줄 친 it이 가리키는 것으로 가장 적절한 것은?",
-            extra: `
-                <p>관련 부분: ... share <u>it</u> with them, even if you haven’t spoken in a while.</p>
-            `,
+            passageKey: "pronoun",
             answer: 4,
             options: [
                 "a connection",
-                "a conscious effort",
                 "a simple message",
+                "your relationship",
                 "an article or resource",
-                "your relationship"
+                "a lack of follow-up"
             ],
-            explanation: "it은 바로 앞에 언급된 'an article or resource'를 가리킵니다."
-        },
-        {
-            id: 9,
-            type: "내용 일치",
-            title: "위 글의 내용과 일치하는 것은?",
-            answer: 2,
-            options: [
-                "관계를 유지하려면 상대방에게 지속적으로 부탁을 해야 한다.",
-                "상대방이 관심 가질 만한 자료를 공유하는 것은 관계 유지를 위해 노력하고 있음을 보여준다.",
-                "한번 친분을 쌓으면 후속 연락이 없어도 관계는 자연스럽게 유지된다.",
-                "간단한 메시지는 관계 강화에 별다른 영향을 주지 못한다.",
-                "관계 유지는 특별한 이벤트가 있을 때만 신경 쓰면 된다."
-            ],
-            explanation: "관심 있는 자료를 공유하는 것은 '상대방을 생각하고 있고 관계 유지를 위해 투자하고 있다'는 신호가 됩니다."
-        },
-        {
-            id: 10,
-            type: "내용 불일치",
-            title: "위 글의 내용과 일치하지 않는 것은?",
-            answer: 2,
-            options: [
-                "후속 조치 부족은 관계가 정체되는 원인이 될 수 있다.",
-                "관계 유지를 위해서는 상대방에게 지속적으로 근황 업데이트를 요청해야 한다.",
-                "오랜 관계를 유지하는 데 소통은 중요한 요소 중 하나이다.",
-                "오랜만에 연락하더라도 유익한 자료를 공유하는 것은 관계 강화에 도움이 될 수 있다.",
-                "관계 유지를 위해 의식적으로 연락을 유지하려는 노력이 필요하다."
-            ],
-            explanation: "본문에서는 끊임없는 요청이나 업데이트는 피하라고 했으므로, 2번은 글의 내용과 반대입니다."
-        },
-        {
-            id: 11,
-            type: "문법/어법",
-            title: "다음 중 밑줄 친 부분의 쓰임이 어색한 것은? (가정 포함)",
-            extra: `
-                <p>다음 표현들 중 어법상 어색한 것을 고르시오.</p>
-            `,
-            answer: 3,
-            options: [
-                "sustaining long-term relationships",
-                "to stay in touch",
-                "to checking in or share something of value",
-                "reaching out with requests or updates",
-                "invested in maintaining the relationship"
-            ],
-            explanation: "to check in or share가 맞는 표현입니다. to checking in은 어색한 형태입니다."
-        },
-        {
-            id: 12,
-            type: "내신형 문법",
-            title: "다음 문장의 밑줄 친 부분을 어법에 맞게 고친 것은?",
-            extra: `
-                <p class="given-sentence">
-                    This doesn’t mean <u>reach</u> out with requests or updates, but rather <u>maintain</u> a friendly and consistent line of communication.
-                </p>
-            `,
-            answer: 4,
-            options: [
-                "reach → to reach / maintain → to maintain",
-                "reach → reaching / maintain → maintain",
-                "reach → to reach / maintain → maintain",
-                "reach → reaching / maintain → maintaining",
-                "reach → reach / maintain → maintaining"
-            ],
-            explanation: "mean의 목적어 자리는 동명사가 자연스럽고, not A but B 병렬 구조이므로 reaching / maintaining이 맞습니다."
-        },
-        {
-            id: 13,
-            type: "어휘 (영영)",
-            title: "밑줄 친 invested의 의미에 가장 가까운 영영 풀이를 고르시오.",
-            extra: `
-                <p>관련 부분: you’re thinking of them and are <u>invested</u> in maintaining the relationship.</p>
-            `,
-            answer: 4,
-            options: [
-                "Provided with the necessary resources for a task.",
-                "Supplied with money to make a profit.",
-                "Protected against loss or damage.",
-                "Deeply involved, committed, or having a strong personal interest in something.",
-                "Relieved from a specific duty or responsibility."
-            ],
-            explanation: "관계 맥락에서 invested는 '관계에 깊이 관여하고 헌신적인'이라는 의미로 쓰입니다."
+            explanation: "share it with them에서 it은 바로 앞에 나온 an article or resource를 대신하는 대명사입니다."
         }
     ];
 
@@ -458,13 +379,17 @@ the relationship.
 
         let innerHTML = `
             <div class="passage">
-${passageHTML}
+${passages[q.passageKey]}
             </div>
             <h3>${currentQuestionIndex + 1}. ${q.type} - ${q.title}</h3>
         `;
 
         if (q.extra) {
-            innerHTML += `<div class="extra">${q.extra}</div>`;
+            innerHTML += `
+                <div class="extra">
+                    ${q.extra}
+                </div>
+            `;
         }
 
         innerHTML += `
@@ -486,9 +411,10 @@ ${passageHTML}
     }
 
     function checkAnswer(questionId, selectedAnswer) {
-        const qIndex = questions.findIndex(q => q.id === questionId);
-        const q = questions[qIndex];
+        const idx = questions.findIndex(q => q.id === questionId);
+        const q = questions[idx];
         const isCorrect = selectedAnswer === q.answer;
+
         const feedbackDiv = document.getElementById(`feedback-${questionId}`);
         const optionsDiv = document.getElementById(`options-${questionId}`);
 
@@ -511,10 +437,7 @@ ${passageHTML}
         }
         feedbackDiv.style.display = 'block';
 
-        quizState[qIndex] = {
-            id: q.id,
-            correct: isCorrect
-        };
+        quizState[idx] = { id: q.id, correct: isCorrect };
 
         document.getElementById('nextButton').style.display = 'block';
     }
@@ -530,7 +453,8 @@ ${passageHTML}
         document.getElementById('results').style.display = 'block';
 
         const scoreDisplay = document.getElementById('scoreDisplay');
-        scoreDisplay.textContent = `총 ${questions.length}문제 중 ${score}문제 정답 (${((score / questions.length) * 100).toFixed(1)}점)`;
+        scoreDisplay.textContent =
+            `총 ${questions.length}문제 중 ${score}문제 정답 (${((score / questions.length) * 100).toFixed(1)}점)`;
 
         const summary = document.getElementById('summary');
         let tableHTML = `
@@ -549,14 +473,10 @@ ${passageHTML}
         questions.forEach((q, index) => {
             const state = quizState[index];
             const resultText = state
-                ? state.correct
-                    ? '✔ 정답'
-                    : '✘ 오답'
+                ? state.correct ? '✔ 정답' : '✘ 오답'
                 : '미풀이';
             const resultClass = state
-                ? state.correct
-                    ? 'correct-cell'
-                    : 'incorrect-cell'
+                ? state.correct ? 'correct-cell' : 'incorrect-cell'
                 : '';
 
             tableHTML += `
@@ -578,4 +498,5 @@ ${passageHTML}
 
 </body>
 </html>
+
 
