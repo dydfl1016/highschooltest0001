@@ -14,7 +14,7 @@
             margin: 20px;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             background-color: #fff;
             padding: 20px;
@@ -30,7 +30,7 @@
             background-color: #e0f7fa;
             border-left: 5px solid #00bcd4;
             padding: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             white-space: pre-wrap;
             font-style: italic;
         }
@@ -40,31 +40,35 @@
             font-weight: bold;
         }
 
-        /* 추가 자료 (A)(B)(C) 박스 */
-        .extra-block {
-            background-color: #fffde7;
-            border-left: 5px solid #ffb300;
-            padding: 15px;
-            margin-bottom: 25px;
-        }
-        .extra-block p {
-            margin: 4px 0;
-        }
-
         /* 퀴즈 카드 */
         .quiz-card {
             border: 1px solid #ccc;
             padding: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             border-radius: 8px;
             background-color: #ffffff;
-            transition: box-shadow 0.3s;
         }
         .quiz-card h3 {
             color: #263238;
-            margin-top: 0;
+            margin-top: 10px;
             border-bottom: 2px solid #eceff1;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
+        }
+
+        /* 문제별 추가 정보 박스 */
+        .extra {
+            background-color: #fffde7;
+            border-left: 4px solid #ffb300;
+            padding: 10px;
+            margin: 10px 0 15px 0;
+        }
+        .extra h4 {
+            margin: 0 0 6px 0;
+            font-size: 14px;
+            color: #fb8c00;
+        }
+        .extra p {
+            margin: 2px 0;
         }
 
         /* 주어진 문장 박스 */
@@ -73,21 +77,21 @@
             border-left: 4px solid #ff9800;
             padding: 10px;
             margin: 10px 0 15px 0;
-            font-style: normal;
         }
 
         /* 보기 버튼 */
         .options button {
             display: block;
             width: 100%;
-            padding: 12px;
-            margin: 8px 0;
+            padding: 10px 12px;
+            margin: 6px 0;
             border: 1px solid #ddd;
             border-radius: 5px;
             background-color: #f9f9f9;
             text-align: left;
             cursor: pointer;
             transition: background-color 0.2s, border-color 0.2s;
+            font-size: 14px;
         }
         .options button:hover:not(:disabled) {
             background-color: #e0e0e0;
@@ -104,11 +108,12 @@
 
         /* 피드백 */
         .feedback {
-            margin-top: 15px;
+            margin-top: 12px;
             padding: 10px;
             border-radius: 5px;
             font-weight: bold;
             display: none;
+            font-size: 14px;
         }
         .feedback.correct {
             color: #1b5e20;
@@ -129,7 +134,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
         #nextButton:hover {
             background-color: #0097a7;
@@ -141,62 +146,36 @@
             border-top: 2px dashed #00bcd4;
             padding-top: 20px;
         }
-
-        .answer-table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            margin-top: 15px; 
+        .answer-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
         }
-        .answer-table th, .answer-table td { 
-            border: 1px solid #ddd; 
-            padding: 10px; 
-            text-align: center; 
+        .answer-table th, .answer-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
         }
-        .answer-table th { 
-            background-color: #f0f0f0; 
+        .answer-table th {
+            background-color: #f0f0f0;
         }
-        .correct-cell { 
-            background-color: #e8f5e9; 
-            font-weight: bold; 
+        .correct-cell {
+            background-color: #e8f5e9;
+            font-weight: bold;
         }
-        .incorrect-cell { 
-            background-color: #ffebee; 
+        .incorrect-cell {
+            background-color: #ffebee;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1 style="text-align: center; color: #00bcd4;">📖 25년 10월 모고 20번 지문 - 관계 유지 편</h1>
-    
-    <h2>📝 다음을 읽고 물음에 답하시오.</h2>
-    <div id="passage" class="passage">
-One of the most important aspects of sustaining long-term
-relationships is communication. [ ① ] It’s easy to connect with someone
-and then let the relationship get <u>stuck</u> due to a lack of follow-up.
-[ ② ] To keep the connection alive, make a <u>conscious</u> effort to stay
-in touch. 
-This doesn’t mean <u>constantly</u> reaching out with requests
-or updates but rather maintaining a friendly and <u>consistent</u> line
-of communication. 
-[ ③ ] A simple message to check in or share
-something of value can go a long way in <u>reinforcing</u> your
-relationship. For example, if you come across an article or
-resource that you think might interest a connection, share <u>it</u>
-with them, even if you haven’t spoken in a while. 
-[ ④ ] This shows
-that you’re thinking of them and are <u>invested</u> in maintaining
-the relationship.
-[ ⑤ ]
-    </div>
-
-    <!-- 문단 배열용 추가 자료 (A)(B)(C) -->
-    <div class="extra-block">
-        <h3>📌 추가 자료: (A), (B), (C)</h3>
-        <p><strong>(A)</strong> For instance, you might send a short message on their birthday or share a helpful article you recently read.</p>
-        <p><strong>(B)</strong> These small gestures signal that you still value the connection, which makes it easier to deepen the relationship later.</p>
-        <p><strong>(C)</strong> Building strong relationships doesn’t happen by accident; it requires intentional effort over time.</p>
-    </div>
+    <h1 style="text-align: center; color: #00bcd4;">📖 25년 10월 모고 20번 지문 - 관계 유지</h1>
+    <p style="text-align:center; color:#607d8b; margin-bottom:25px;">
+        각 문제 카드 상단에 지문 전체가 다시 보이도록 구성했습니다.
+    </p>
 
     <h2 style="color: #455a64;">💡 문제 풀이 (총 13문항)</h2>
     <div id="quizContainer"></div>
@@ -212,11 +191,29 @@ the relationship.
 </div>
 
 <script>
-    // =========================
-    // 퀴즈 데이터
-    // =========================
+    // 공통 지문 HTML (모든 문제 카드 상단에 공통으로 들어감)
+    const passageHTML = `
+One of the most important aspects of sustaining long-term
+relationships is communication. [ ① ] It’s easy to connect with someone
+and then let the relationship get <u>stuck</u> due to a lack of follow-up.
+[ ② ] To keep the connection alive, make a <u>conscious</u> effort to stay
+in touch.
+This doesn’t mean <u>constantly</u> reaching out with requests
+or updates but rather maintaining a friendly and <u>consistent</u> line
+of communication.
+[ ③ ] A simple message to check in or share
+something of value can go a long way in <u>reinforcing</u> your
+relationship. For example, if you come across an article or
+resource that you think might interest a connection, share <u>it</u>
+with them, even if you haven’t spoken in a while.
+[ ④ ] This shows
+that you’re thinking of them and are <u>invested</u> in maintaining
+the relationship.
+[ ⑤ ]
+    `;
+
+    // 문제 데이터
     const questions = [
-        // 1. 요지/주장
         {
             id: 1,
             type: "요지/주장",
@@ -229,44 +226,53 @@ the relationship.
                 "관계가 소원해지는 것을 막기 위해 사소한 부탁이라도 거절하지 말아야 한다.",
                 "대면 소통보다 비대면 소통이 관계 강화에 더 효과적일 수 있다."
             ],
-            explanation: "글의 핵심은 장기적인 관계 유지를 위해 의식적인 노력(conscious effort)을 통해 친밀하고 일관된 소통(consistent line of communication)을 유지해야 한다는 것입니다."
+            explanation: "글의 핵심은 장기적인 관계 유지를 위해 의식적인 노력(conscious effort)을 통해 친밀하고 일관된 소통(consistent line of communication)을 유지해야 한다는 점입니다."
         },
-        // 2. 문법/어법 (let the relationship getting stuck 가정)
         {
             id: 2,
             type: "문법/어법",
-            title: "다음 밑줄 친 부분 중, 어법상 틀린 것은? (let the relationship getting stuck으로 가정)",
+            title: "다음 중 어법상 옳지 않은 것은? (가정: let the relationship getting stuck으로 바꾸었을 때)",
+            extra: `
+                <p>본문 중 다음 부분을 보자.</p>
+                <p style="margin-left:10px;">... and then let the relationship get <u>stuck</u> due to a lack of follow-up.</p>
+            `,
             answer: 2,
             options: [
-                "sustaining",
-                "getting (get으로 바뀌어야 함)",
-                "reaching",
-                "maintaining",
-                "reinforcing"
+                "sustaining long-term relationships",
+                "letting the relationship getting stuck",
+                "reaching out with requests or updates",
+                "maintaining a friendly and consistent line",
+                "reinforcing your relationship"
             ],
-            explanation: "let은 사역동사이므로 목적격 보어는 동사원형(get)이 와야 합니다. getting은 틀린 형태입니다."
+            explanation: "사역동사 let 뒤에는 목적어 + 동사원형이 와야 하므로 get이 와야 합니다. getting stuck은 어법상 옳지 않습니다."
         },
-        // 3. 어휘 문제 (stuck -> free 가정)
         {
             id: 3,
             type: "어휘",
-            title: "다음 밑줄 친 단어 중 문맥상 낱말의 쓰임이 적절하지 않은 것은?",
+            title: "다음 밑줄 친 단어의 쓰임으로 볼 때, 문맥상 가장 어색한 것은? (가정: stuck 대신 free가 들어간 경우)",
+            extra: `
+                <p>본문: ... let the relationship get <u>stuck</u> due to a lack of follow-up.</p>
+                <p>관계가 후속 조치 부족으로 '정체되는 것'이 자연스러운 문맥입니다.</p>
+            `,
             answer: 1,
             options: [
-                "stuck (원문에서 free로 가정 시 문맥상 어색)",
+                "stuck (자유롭다는 의미의 free로 바뀌었다고 가정할 때)",
                 "conscious",
                 "constantly",
                 "consistent",
                 "reinforcing"
             ],
-            explanation: "관계는 후속 조치 부족으로 '정체되어야(get stuck)' 문맥상 적절합니다. 만약 free가 들어가면 문맥상 어색합니다."
+            explanation: "관계는 follow-up 부족으로 '멈춰버리는 것(get stuck)'이 자연스러운 문맥입니다. 만약 free가 들어간다면 의미상 어색합니다."
         },
-        // 4. 빈칸 추론 1
         {
             id: 4,
             type: "빈칸 추론",
             title: "빈칸에 들어갈 말로 가장 적절한 것은?",
-            subText: "This doesn’t mean ... but rather ______ of communication.",
+            extra: `
+                <p class="given-sentence">
+                    This doesn’t mean constantly reaching out with requests or updates but rather ______ of communication.
+                </p>
+            `,
             answer: 2,
             options: [
                 "establishing a temporary and informal method",
@@ -275,14 +281,17 @@ the relationship.
                 "avoiding contact until a significant event occurs",
                 "focusing on the frequency over the quality"
             ],
-            explanation: "글은 '끊임없는 요청이나 업데이트'가 아닌, '친밀하고 일관된 소통 채널(friendly and consistent line)'을 유지하는 것이 중요하다고 말합니다."
+            explanation: "본문에서 강조하는 것은 '끊임없는 요청'이 아니라 '친근하고 일관된 소통 라인'을 유지하는 것입니다."
         },
-        // 5. 빈칸 추론 2
         {
             id: 5,
             type: "빈칸 추론",
-            title: "빈칸에 들어갈 말로 가장 적절한 것은?",
-            subText: "A simple message ... can go a long way in ______ your relationship.",
+            title: "밑줄에 공통으로 들어갈 말로 가장 적절한 것은?",
+            extra: `
+                <p class="given-sentence">
+                    A simple message ... can go a long way in ______ your relationship.
+                </p>
+            `,
             answer: 5,
             options: [
                 "restoring the initial formality of",
@@ -291,14 +300,20 @@ the relationship.
                 "preventing the inevitable ending of",
                 "reinforcing the foundation of"
             ],
-            explanation: "간단한 메시지나 가치 있는 것을 공유하는 것은 관계를 '강화하는(reinforcing)' 효과가 있으며, 이는 관계의 '토대(foundation)'를 다지는 것과 같은 맥락입니다."
+            explanation: "간단한 메시지나 자료 공유는 관계를 강화(reinforcing)하는 데 도움을 주며, 관계의 '기초(foundation)'를 다진다는 의미와 잘 맞습니다."
         },
-        // 6. 문단 배열
         {
             id: 6,
             type: "문단 배열",
-            title: "주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?",
-            given: "(A), (B), (C) 문단은 지문 아래 추가 자료를 참고하시오.",
+            title: "주어진 글 다음에 이어질 (A), (B), (C)의 순서로 가장 적절한 것은?",
+            extra: `
+                <div class="extra">
+                    <h4>(A), (B), (C) 읽기</h4>
+                    <p><strong>(A)</strong> For instance, you might send a short message on their birthday or share a helpful article you recently read.</p>
+                    <p><strong>(B)</strong> These small gestures signal that you still value the connection, which makes it easier to deepen the relationship later.</p>
+                    <p><strong>(C)</strong> Building strong relationships doesn’t happen by accident; it requires intentional effort over time.</p>
+                </div>
+            `,
             answer: 4,
             options: [
                 "(A)-(C)-(B)",
@@ -307,23 +322,30 @@ the relationship.
                 "(C)-(A)-(B)",
                 "(A)-(B)-(C)"
             ],
-            explanation: "원문 흐름은 '노력 필요성 (C) → 구체적인 예시 (A) → 예시의 의미 (B)' 순서로, C-A-B가 가장 자연스럽습니다."
+            explanation: "먼저 관계는 우연히 유지되는 것이 아니라 의도적 노력이 필요하다(C) → 예시 제시(A) → 그 예시의 의미/효과 설명(B) 순서가 자연스럽습니다."
         },
-        // 7. 문장 삽입
         {
             id: 7,
             type: "문장 삽입",
-            title: "글의 흐름상, 주어진 문장이 들어가기에 가장 적절한 곳은?",
-            given: "This doesn’t mean constantly reaching out with requests or updates but rather maintaining a friendly and consistent line of communication.",
+            title: "주어진 문장이 들어가기에 가장 적절한 곳은?",
+            extra: `
+                <div class="given-sentence">
+                    <strong>[주어진 문장]</strong><br>
+                    This doesn’t mean constantly reaching out with requests or updates but rather maintaining a friendly and consistent line of communication.
+                </div>
+                <p>지문 속 [ ① ] ~ [ ⑤ ] 위치를 참고하여 고르시오.</p>
+            `,
             answer: 3,
             options: ["①", "②", "③", "④", "⑤"],
-            explanation: "주어진 문장의 This는 바로 앞 부분의 '의식적인 노력(conscious effort)'을 받아, 그 노력의 구체적인 성격(not requests but consistent line)을 설명하므로 [ ③ ]에 들어가는 것이 가장 적절합니다."
+            explanation: "주어진 문장은 '의식적인 노력(conscious effort)'이 어떤 모습인지 구체적으로 설명합니다. 따라서 그 설명이 이어지는 위치인 [ ③ ] 앞이 가장 자연스럽습니다."
         },
-        // 8. 지시어/대명사
         {
             id: 8,
             type: "지시어/대명사",
             title: "밑줄 친 it이 가리키는 것으로 가장 적절한 것은?",
+            extra: `
+                <p>관련 부분: ... share <u>it</u> with them, even if you haven’t spoken in a while.</p>
+            `,
             answer: 4,
             options: [
                 "a connection",
@@ -332,58 +354,62 @@ the relationship.
                 "an article or resource",
                 "your relationship"
             ],
-            explanation: "it은 share의 대상인 'an article or resource'를 대신하고 있습니다."
+            explanation: "it은 바로 앞에 언급된 'an article or resource'를 가리킵니다."
         },
-        // 9. 내용 일치 (일치)
         {
             id: 9,
             type: "내용 일치",
             title: "위 글의 내용과 일치하는 것은?",
             answer: 2,
             options: [
-                "장기적인 관계 유지를 위해서는 상대방에게 지속적인 요청을 해야 한다.",
-                "관심을 가질 만한 기사를 공유하는 것은 관계 유지에 노력하고 있음을 보여준다.",
-                "친분을 쌓은 후에는 후속 조치가 없더라도 관계는 자연스레 유지된다.",
-                "간단한 안부 메시지는 관계 강화에 큰 도움이 되지 못한다.",
-                "관계 유지를 위한 노력은 무의식적인 수준에서 이루어져야 한다."
+                "관계를 유지하려면 상대방에게 지속적으로 부탁을 해야 한다.",
+                "상대방이 관심 가질 만한 자료를 공유하는 것은 관계 유지를 위해 노력하고 있음을 보여준다.",
+                "한번 친분을 쌓으면 후속 연락이 없어도 관계는 자연스럽게 유지된다.",
+                "간단한 메시지는 관계 강화에 별다른 영향을 주지 못한다.",
+                "관계 유지는 특별한 이벤트가 있을 때만 신경 쓰면 된다."
             ],
-            explanation: "기사 공유는 'you’re thinking of them and are invested in maintaining the relationship'을 보여준다고 언급됩니다."
+            explanation: "관심 있는 자료를 공유하는 것은 '상대방을 생각하고 있고 관계 유지를 위해 투자하고 있다'는 신호가 됩니다."
         },
-        // 10. 내용 불일치
         {
             id: 10,
             type: "내용 불일치",
             title: "위 글의 내용과 일치하지 않는 것은?",
             answer: 2,
             options: [
-                "후속 조치 부족은 관계가 정체되게 하는 주요 원인 중 하나이다.",
+                "후속 조치 부족은 관계가 정체되는 원인이 될 수 있다.",
                 "관계 유지를 위해서는 상대방에게 지속적으로 근황 업데이트를 요청해야 한다.",
-                "오랜 관계를 지속시키는 데 있어 소통은 가장 중요한 측면 중 하나이다.",
-                "관계가 소원해졌더라도 상대방의 관심사를 공유하는 것은 관계 강화에 도움이 된다.",
-                "관계의 활력을 유지하기 위해 연락을 유지하려는 의식적인 노력이 필요하다."
+                "오랜 관계를 유지하는 데 소통은 중요한 요소 중 하나이다.",
+                "오랜만에 연락하더라도 유익한 자료를 공유하는 것은 관계 강화에 도움이 될 수 있다.",
+                "관계 유지를 위해 의식적으로 연락을 유지하려는 노력이 필요하다."
             ],
-            explanation: "'constantly reaching out with requests or updates'는 피해야 할 것이라고 명시되어 있습니다."
+            explanation: "본문에서는 끊임없는 요청이나 업데이트는 피하라고 했으므로, 2번은 글의 내용과 반대입니다."
         },
-        // 11. 문법/어법 (check 가정)
         {
             id: 11,
             type: "문법/어법",
-            title: "다음 밑줄 친 부분 중, 어법상 틀린 것은? (원문은 모두 적절하나, 내신형 오답 유도를 가정)",
+            title: "다음 중 밑줄 친 부분의 쓰임이 어색한 것은? (가정 포함)",
+            extra: `
+                <p>다음 표현들 중 어법상 어색한 것을 고르시오.</p>
+            `,
             answer: 3,
             options: [
-                "sustaining (O)",
-                "get (O)",
-                "check (X, to checking으로 잘못 고친 경우를 가정)",
-                "reaching (O)",
-                "maintaining (O)"
+                "sustaining long-term relationships",
+                "to stay in touch",
+                "to checking in or share something of value",
+                "reaching out with requests or updates",
+                "invested in maintaining the relationship"
             ],
-            explanation: "A simple message to check in or share...에서 check는 to에 연결된 동사원형으로 적절합니다. check를 동명사로 바꾸면 어색해집니다."
+            explanation: "to check in or share가 맞는 표현입니다. to checking in은 어색한 형태입니다."
         },
-        // 12. 내신형 문법 (reach / maintain)
         {
             id: 12,
             type: "내신형 문법",
-            title: "다음 문장의 밑줄 친 부분을 어법상 바르게 고친 것은? (not reach but maintain으로 가정)",
+            title: "다음 문장의 밑줄 친 부분을 어법에 맞게 고친 것은?",
+            extra: `
+                <p class="given-sentence">
+                    This doesn’t mean <u>reach</u> out with requests or updates, but rather <u>maintain</u> a friendly and consistent line of communication.
+                </p>
+            `,
             answer: 4,
             options: [
                 "reach → to reach / maintain → to maintain",
@@ -392,13 +418,15 @@ the relationship.
                 "reach → reaching / maintain → maintaining",
                 "reach → reach / maintain → maintaining"
             ],
-            explanation: "mean의 목적어는 동명사(reaching)여야 하며, not A but rather B 구문에서 A와 B는 병렬 구조로 동명사(maintaining)가 되어야 합니다."
+            explanation: "mean의 목적어 자리는 동명사가 자연스럽고, not A but B 병렬 구조이므로 reaching / maintaining이 맞습니다."
         },
-        // 13. 어휘 (영영 풀이)
         {
             id: 13,
-            type: "어휘",
-            title: "밑줄 친 invested의 영영 풀이로 가장 적절한 것은?",
+            type: "어휘 (영영)",
+            title: "밑줄 친 invested의 의미에 가장 가까운 영영 풀이를 고르시오.",
+            extra: `
+                <p>관련 부분: you’re thinking of them and are <u>invested</u> in maintaining the relationship.</p>
+            `,
             answer: 4,
             options: [
                 "Provided with the necessary resources for a task.",
@@ -407,7 +435,7 @@ the relationship.
                 "Deeply involved, committed, or having a strong personal interest in something.",
                 "Relieved from a specific duty or responsibility."
             ],
-            explanation: "관계에서 invested는 '깊이 관여하고 헌신하는' 의미로 사용됩니다."
+            explanation: "관계 맥락에서 invested는 '관계에 깊이 관여하고 헌신적인'이라는 의미로 쓰입니다."
         }
     ];
 
@@ -415,9 +443,6 @@ the relationship.
     let score = 0;
     let quizState = [];
 
-    // =========================
-    // 퀴즈 렌더링
-    // =========================
     function renderQuestion() {
         if (currentQuestionIndex >= questions.length) {
             showResults();
@@ -432,15 +457,14 @@ the relationship.
         card.className = 'quiz-card';
 
         let innerHTML = `
-            <h3>${currentQuestionIndex + 1}. ${q.type} (${q.title})</h3>
+            <div class="passage">
+${passageHTML}
+            </div>
+            <h3>${currentQuestionIndex + 1}. ${q.type} - ${q.title}</h3>
         `;
 
-        // subText 또는 given(주어진 문장/자료) 표시
-        if (q.subText) {
-            innerHTML += `<div class="given-sentence"><strong>[문장 일부]</strong><br>${q.subText}</div>`;
-        }
-        if (q.given) {
-            innerHTML += `<div class="given-sentence"><strong>[주어진 문장/자료]</strong><br>${q.given}</div>`;
+        if (q.extra) {
+            innerHTML += `<div class="extra">${q.extra}</div>`;
         }
 
         innerHTML += `
@@ -457,12 +481,10 @@ the relationship.
 
         card.innerHTML = innerHTML;
         quizContainer.appendChild(card);
+
         document.getElementById('nextButton').style.display = 'none';
     }
 
-    // =========================
-    // 정답 확인
-    // =========================
     function checkAnswer(questionId, selectedAnswer) {
         const qIndex = questions.findIndex(q => q.id === questionId);
         const q = questions[qIndex];
@@ -470,7 +492,6 @@ the relationship.
         const feedbackDiv = document.getElementById(`feedback-${questionId}`);
         const optionsDiv = document.getElementById(`options-${questionId}`);
 
-        // 보기 버튼 비활성화 + 정답/오답 색
         optionsDiv.querySelectorAll('button').forEach((btn, index) => {
             btn.disabled = true;
             if (index + 1 === q.answer) {
@@ -480,7 +501,6 @@ the relationship.
             }
         });
 
-        // 피드백
         if (isCorrect) {
             feedbackDiv.className = 'feedback correct';
             feedbackDiv.innerHTML = `✔ 정답입니다!<br>해설: ${q.explanation}`;
@@ -491,7 +511,6 @@ the relationship.
         }
         feedbackDiv.style.display = 'block';
 
-        // 상태 저장
         quizState[qIndex] = {
             id: q.id,
             correct: isCorrect
@@ -500,13 +519,11 @@ the relationship.
         document.getElementById('nextButton').style.display = 'block';
     }
 
-    // 다음 문제
     function loadNextQuestion() {
         currentQuestionIndex++;
         renderQuestion();
     }
 
-    // 결과 화면
     function showResults() {
         document.getElementById('quizContainer').innerHTML = '';
         document.getElementById('nextButton').style.display = 'none';
@@ -556,9 +573,9 @@ the relationship.
         summary.innerHTML = tableHTML;
     }
 
-    // 첫 문제 로드
     window.onload = renderQuestion;
 </script>
 
 </body>
 </html>
+
