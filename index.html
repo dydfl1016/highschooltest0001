@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고1 내신 문제 풀이 (Interactive Quiz)</title>
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            margin-top: 0;
+        }
+
+        /* 지문 박스 */
+        .passage {
+            background-color: #e0f7fa;
+            border-left: 5px solid #00bcd4;
+            padding: 15px;
+            margin-bottom: 25px;
+            white-space: pre-wrap;
+            font-style: italic;
+        }
+        .passage u {
+            text-decoration: underline;
+            text-decoration-color: #00bcd4;
+            font-weight: bold;
+        }
+
+        /* 추가 자료 (A)(B)(C) 박스 */
+        .extra-block {
+            background-color: #fffde7;
+            border-left: 5px solid #ffb300;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+        .extra-block p {
+            margin: 4px 0;
+        }
+
+        /* 퀴즈 카드 */
+        .quiz-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            transition: box-shadow 0.3s;
+        }
+        .quiz-card h3 {
+            color: #263238;
+            margin-top: 0;
+            border-bottom: 2px solid #eceff1;
+            padding-bottom: 10px;
+        }
+
+        /* 주어진 문장 박스 */
+        .given-sentence {
+            background-color: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 10px;
+            margin: 10px 0 15px 0;
+            font-style: normal;
+        }
+
+        /* 보기 버튼 */
+        .options button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            text-align: left;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .options button:hover:not(:disabled) {
+            background-color: #e0e0e0;
+        }
+        .options button.correct {
+            background-color: #e8f5e9;
+            border-color: #4caf50;
+            font-weight: bold;
+        }
+        .options button.incorrect {
+            background-color: #ffebee;
+            border-color: #f44336;
+        }
+
+        /* 피드백 */
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: none;
+        }
+        .feedback.correct {
+            color: #1b5e20;
+            background-color: #c8e6c9;
+        }
+        .feedback.incorrect {
+            color: #b71c1c;
+            background-color: #ffcdd2;
+        }
+
+        /* 다음 버튼 */
+        #nextButton {
+            display: none;
+            padding: 10px 20px;
+            background-color: #00bcd4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        #nextButton:hover {
+            background-color: #0097a7;
+        }
+
+        /* 결과 */
+        #results {
+            margin-top: 30px;
+            border-top: 2px dashed #00bcd4;
+            padding-top: 20px;
+        }
+
+        .answer-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 15px; 
+        }
+        .answer-table th, .answer-table td { 
+            border: 1px solid #ddd; 
+            padding: 10px; 
+            text-align: center; 
+        }
+        .answer-table th { 
+            background-color: #f0f0f0; 
+        }
+        .correct-cell { 
+            background-color: #e8f5e9; 
+            font-weight: bold; 
+        }
+        .incorrect-cell { 
+            background-color: #ffebee; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 style="text-align: center; color: #00bcd4;">📖 25년 10월 모고 20번 지문 - 관계 유지 편</h1>
+    
+    <h2>📝 다음을 읽고 물음에 답하시오.</h2>
+    <div id="passage" class="passage">
+One of the most important aspects of sustaining long-term
+relationships is communication. [ ① ] It’s easy to connect with someone
+and then let the relationship get <u>stuck</u> due to a lack of follow-up.
+[ ② ] To keep the connection alive, make a <u>conscious</u> effort to stay
+in touch. 
+This doesn’t mean <u>constantly</u> reaching out with requests
+or updates but rather maintaining a friendly and <u>consistent</u> line
+of communication. 
+[ ③ ] A simple message to check in or share
+something of value can go a long way in <u>reinforcing</u> your
+relationship. For example, if you come across an article or
+resource that you think might interest a connection, share <u>it</u>
+with them, even if you haven’t spoken in a while. 
+[ ④ ] This shows
+that you’re thinking of them and are <u>invested</u> in maintaining
+the relationship.
+[ ⑤ ]
+    </div>
+
+    <!-- 문단 배열용 추가 자료 (A)(B)(C) -->
+    <div class="extra-block">
+        <h3>📌 추가 자료: (A), (B), (C)</h3>
+        <p><strong>(A)</strong> For instance, you might send a short message on their birthday or share a helpful article you recently read.</p>
+        <p><strong>(B)</strong> These small gestures signal that you still value the connection, which makes it easier to deepen the relationship later.</p>
+        <p><strong>(C)</strong> Building strong relationships doesn’t happen by accident; it requires intentional effort over time.</p>
+    </div>
+
+    <h2 style="color: #455a64;">💡 문제 풀이 (총 13문항)</h2>
+    <div id="quizContainer"></div>
+
+    <button id="nextButton" onclick="loadNextQuestion()">다음 문제</button>
+
+    <div id="results" style="display: none;">
+        <h2 style="color: #00bcd4;">🎉 풀이 완료!</h2>
+        <h3 style="color: #263238;">📋 전체 정답표 및 정답 해설 요약</h3>
+        <p id="scoreDisplay"></p>
+        <div id="summary"></div>
+    </div>
+</div>
+
+<script>
+    // =========================
+    // 퀴즈 데이터
+    // =========================
+    const questions = [
+        // 1. 요지/주장
+        {
+            id: 1,
+            type: "요지/주장",
+            title: "위 글의 요지로 가장 적절한 것은?",
+            answer: 2,
+            options: [
+                "오랜 관계 유지를 위해 정기적인 만남이 필수적이다.",
+                "장기적인 관계 유지를 위해 지속적이고 의식적인 소통 노력이 중요하다.",
+                "상대방의 관심사를 파악하여 그에 맞는 정보를 제공해야 한다.",
+                "관계가 소원해지는 것을 막기 위해 사소한 부탁이라도 거절하지 말아야 한다.",
+                "대면 소통보다 비대면 소통이 관계 강화에 더 효과적일 수 있다."
+            ],
+            explanation: "글의 핵심은 장기적인 관계 유지를 위해 의식적인 노력(conscious effort)을 통해 친밀하고 일관된 소통(consistent line of communication)을 유지해야 한다는 것입니다."
+        },
+        // 2. 문법/어법 (let the relationship getting stuck 가정)
+        {
+            id: 2,
+            type: "문법/어법",
+            title: "다음 밑줄 친 부분 중, 어법상 틀린 것은? (let the relationship getting stuck으로 가정)",
+            answer: 2,
+            options: [
+                "sustaining",
+                "getting (get으로 바뀌어야 함)",
+                "reaching",
+                "maintaining",
+                "reinforcing"
+            ],
+            explanation: "let은 사역동사이므로 목적격 보어는 동사원형(get)이 와야 합니다. getting은 틀린 형태입니다."
+        },
+        // 3. 어휘 문제 (stuck -> free 가정)
+        {
+            id: 3,
+            type: "어휘",
+            title: "다음 밑줄 친 단어 중 문맥상 낱말의 쓰임이 적절하지 않은 것은?",
+            answer: 1,
+            options: [
+                "stuck (원문에서 free로 가정 시 문맥상 어색)",
+                "conscious",
+                "constantly",
+                "consistent",
+                "reinforcing"
+            ],
+            explanation: "관계는 후속 조치 부족으로 '정체되어야(get stuck)' 문맥상 적절합니다. 만약 free가 들어가면 문맥상 어색합니다."
+        },
+        // 4. 빈칸 추론 1
+        {
+            id: 4,
+            type: "빈칸 추론",
+            title: "빈칸에 들어갈 말로 가장 적절한 것은?",
+            subText: "This doesn’t mean ... but rather ______ of communication.",
+            answer: 2,
+            options: [
+                "establishing a temporary and informal method",
+                "maintaining a friendly and consistent line",
+                "setting up a formal channel for negotiation",
+                "avoiding contact until a significant event occurs",
+                "focusing on the frequency over the quality"
+            ],
+            explanation: "글은 '끊임없는 요청이나 업데이트'가 아닌, '친밀하고 일관된 소통 채널(friendly and consistent line)'을 유지하는 것이 중요하다고 말합니다."
+        },
+        // 5. 빈칸 추론 2
+        {
+            id: 5,
+            type: "빈칸 추론",
+            title: "빈칸에 들어갈 말로 가장 적절한 것은?",
+            subText: "A simple message ... can go a long way in ______ your relationship.",
+            answer: 5,
+            options: [
+                "restoring the initial formality of",
+                "reducing the emotional burden in",
+                "demanding more commitment for",
+                "preventing the inevitable ending of",
+                "reinforcing the foundation of"
+            ],
+            explanation: "간단한 메시지나 가치 있는 것을 공유하는 것은 관계를 '강화하는(reinforcing)' 효과가 있으며, 이는 관계의 '토대(foundation)'를 다지는 것과 같은 맥락입니다."
+        },
+        // 6. 문단 배열
+        {
+            id: 6,
+            type: "문단 배열",
+            title: "주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?",
+            given: "(A), (B), (C) 문단은 지문 아래 추가 자료를 참고하시오.",
+            answer: 4,
+            options: [
+                "(A)-(C)-(B)",
+                "(B)-(A)-(C)",
+                "(B)-(C)-(A)",
+                "(C)-(A)-(B)",
+                "(A)-(B)-(C)"
+            ],
+            explanation: "원문 흐름은 '노력 필요성 (C) → 구체적인 예시 (A) → 예시의 의미 (B)' 순서로, C-A-B가 가장 자연스럽습니다."
+        },
+        // 7. 문장 삽입
+        {
+            id: 7,
+            type: "문장 삽입",
+            title: "글의 흐름상, 주어진 문장이 들어가기에 가장 적절한 곳은?",
+            given: "This doesn’t mean constantly reaching out with requests or updates but rather maintaining a friendly and consistent line of communication.",
+            answer: 3,
+            options: ["①", "②", "③", "④", "⑤"],
+            explanation: "주어진 문장의 This는 바로 앞 부분의 '의식적인 노력(conscious effort)'을 받아, 그 노력의 구체적인 성격(not requests but consistent line)을 설명하므로 [ ③ ]에 들어가는 것이 가장 적절합니다."
+        },
+        // 8. 지시어/대명사
+        {
+            id: 8,
+            type: "지시어/대명사",
+            title: "밑줄 친 it이 가리키는 것으로 가장 적절한 것은?",
+            answer: 4,
+            options: [
+                "a connection",
+                "a conscious effort",
+                "a simple message",
+                "an article or resource",
+                "your relationship"
+            ],
+            explanation: "it은 share의 대상인 'an article or resource'를 대신하고 있습니다."
+        },
+        // 9. 내용 일치 (일치)
+        {
+            id: 9,
+            type: "내용 일치",
+            title: "위 글의 내용과 일치하는 것은?",
+            answer: 2,
+            options: [
+                "장기적인 관계 유지를 위해서는 상대방에게 지속적인 요청을 해야 한다.",
+                "관심을 가질 만한 기사를 공유하는 것은 관계 유지에 노력하고 있음을 보여준다.",
+                "친분을 쌓은 후에는 후속 조치가 없더라도 관계는 자연스레 유지된다.",
+                "간단한 안부 메시지는 관계 강화에 큰 도움이 되지 못한다.",
+                "관계 유지를 위한 노력은 무의식적인 수준에서 이루어져야 한다."
+            ],
+            explanation: "기사 공유는 'you’re thinking of them and are invested in maintaining the relationship'을 보여준다고 언급됩니다."
+        },
+        // 10. 내용 불일치
+        {
+            id: 10,
+            type: "내용 불일치",
+            title: "위 글의 내용과 일치하지 않는 것은?",
+            answer: 2,
+            options: [
+                "후속 조치 부족은 관계가 정체되게 하는 주요 원인 중 하나이다.",
+                "관계 유지를 위해서는 상대방에게 지속적으로 근황 업데이트를 요청해야 한다.",
+                "오랜 관계를 지속시키는 데 있어 소통은 가장 중요한 측면 중 하나이다.",
+                "관계가 소원해졌더라도 상대방의 관심사를 공유하는 것은 관계 강화에 도움이 된다.",
+                "관계의 활력을 유지하기 위해 연락을 유지하려는 의식적인 노력이 필요하다."
+            ],
+            explanation: "'constantly reaching out with requests or updates'는 피해야 할 것이라고 명시되어 있습니다."
+        },
+        // 11. 문법/어법 (check 가정)
+        {
+            id: 11,
+            type: "문법/어법",
+            title: "다음 밑줄 친 부분 중, 어법상 틀린 것은? (원문은 모두 적절하나, 내신형 오답 유도를 가정)",
+            answer: 3,
+            options: [
+                "sustaining (O)",
+                "get (O)",
+                "check (X, to checking으로 잘못 고친 경우를 가정)",
+                "reaching (O)",
+                "maintaining (O)"
+            ],
+            explanation: "A simple message to check in or share...에서 check는 to에 연결된 동사원형으로 적절합니다. check를 동명사로 바꾸면 어색해집니다."
+        },
+        // 12. 내신형 문법 (reach / maintain)
+        {
+            id: 12,
+            type: "내신형 문법",
+            title: "다음 문장의 밑줄 친 부분을 어법상 바르게 고친 것은? (not reach but maintain으로 가정)",
+            answer: 4,
+            options: [
+                "reach → to reach / maintain → to maintain",
+                "reach → reaching / maintain → maintain",
+                "reach → to reach / maintain → maintain",
+                "reach → reaching / maintain → maintaining",
+                "reach → reach / maintain → maintaining"
+            ],
+            explanation: "mean의 목적어는 동명사(reaching)여야 하며, not A but rather B 구문에서 A와 B는 병렬 구조로 동명사(maintaining)가 되어야 합니다."
+        },
+        // 13. 어휘 (영영 풀이)
+        {
+            id: 13,
+            type: "어휘",
+            title: "밑줄 친 invested의 영영 풀이로 가장 적절한 것은?",
+            answer: 4,
+            options: [
+                "Provided with the necessary resources for a task.",
+                "Supplied with money to make a profit.",
+                "Protected against loss or damage.",
+                "Deeply involved, committed, or having a strong personal interest in something.",
+                "Relieved from a specific duty or responsibility."
+            ],
+            explanation: "관계에서 invested는 '깊이 관여하고 헌신하는' 의미로 사용됩니다."
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let quizState = [];
+
+    // =========================
+    // 퀴즈 렌더링
+    // =========================
+    function renderQuestion() {
+        if (currentQuestionIndex >= questions.length) {
+            showResults();
+            return;
+        }
+
+        const q = questions[currentQuestionIndex];
+        const quizContainer = document.getElementById('quizContainer');
+        quizContainer.innerHTML = '';
+
+        const card = document.createElement('div');
+        card.className = 'quiz-card';
+
+        let innerHTML = `
+            <h3>${currentQuestionIndex + 1}. ${q.type} (${q.title})</h3>
+        `;
+
+        // subText 또는 given(주어진 문장/자료) 표시
+        if (q.subText) {
+            innerHTML += `<div class="given-sentence"><strong>[문장 일부]</strong><br>${q.subText}</div>`;
+        }
+        if (q.given) {
+            innerHTML += `<div class="given-sentence"><strong>[주어진 문장/자료]</strong><br>${q.given}</div>`;
+        }
+
+        innerHTML += `
+            <div class="options" id="options-${q.id}">
+                ${q.options
+                    .map(
+                        (opt, index) =>
+                            `<button onclick="checkAnswer(${q.id}, ${index + 1})">${index + 1}. ${opt}</button>`
+                    )
+                    .join('')}
+            </div>
+            <div id="feedback-${q.id}" class="feedback"></div>
+        `;
+
+        card.innerHTML = innerHTML;
+        quizContainer.appendChild(card);
+        document.getElementById('nextButton').style.display = 'none';
+    }
+
+    // =========================
+    // 정답 확인
+    // =========================
+    function checkAnswer(questionId, selectedAnswer) {
+        const qIndex = questions.findIndex(q => q.id === questionId);
+        const q = questions[qIndex];
+        const isCorrect = selectedAnswer === q.answer;
+        const feedbackDiv = document.getElementById(`feedback-${questionId}`);
+        const optionsDiv = document.getElementById(`options-${questionId}`);
+
+        // 보기 버튼 비활성화 + 정답/오답 색
+        optionsDiv.querySelectorAll('button').forEach((btn, index) => {
+            btn.disabled = true;
+            if (index + 1 === q.answer) {
+                btn.classList.add('correct');
+            } else if (index + 1 === selectedAnswer) {
+                btn.classList.add('incorrect');
+            }
+        });
+
+        // 피드백
+        if (isCorrect) {
+            feedbackDiv.className = 'feedback correct';
+            feedbackDiv.innerHTML = `✔ 정답입니다!<br>해설: ${q.explanation}`;
+            score++;
+        } else {
+            feedbackDiv.className = 'feedback incorrect';
+            feedbackDiv.innerHTML = `✘ 오답입니다. (정답: ${q.answer}번)<br>해설: ${q.explanation}`;
+        }
+        feedbackDiv.style.display = 'block';
+
+        // 상태 저장
+        quizState[qIndex] = {
+            id: q.id,
+            correct: isCorrect
+        };
+
+        document.getElementById('nextButton').style.display = 'block';
+    }
+
+    // 다음 문제
+    function loadNextQuestion() {
+        currentQuestionIndex++;
+        renderQuestion();
+    }
+
+    // 결과 화면
+    function showResults() {
+        document.getElementById('quizContainer').innerHTML = '';
+        document.getElementById('nextButton').style.display = 'none';
+        document.getElementById('results').style.display = 'block';
+
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        scoreDisplay.textContent = `총 ${questions.length}문제 중 ${score}문제 정답 (${((score / questions.length) * 100).toFixed(1)}점)`;
+
+        const summary = document.getElementById('summary');
+        let tableHTML = `
+            <table class="answer-table">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>유형</th>
+                        <th>정답</th>
+                        <th>풀이 결과</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        questions.forEach((q, index) => {
+            const state = quizState[index];
+            const resultText = state
+                ? state.correct
+                    ? '✔ 정답'
+                    : '✘ 오답'
+                : '미풀이';
+            const resultClass = state
+                ? state.correct
+                    ? 'correct-cell'
+                    : 'incorrect-cell'
+                : '';
+
+            tableHTML += `
+                <tr class="${resultClass}">
+                    <td>${index + 1}</td>
+                    <td>${q.type}</td>
+                    <td>${q.answer}번</td>
+                    <td>${resultText}</td>
+                </tr>
+            `;
+        });
+
+        tableHTML += `</tbody></table>`;
+        summary.innerHTML = tableHTML;
+    }
+
+    // 첫 문제 로드
+    window.onload = renderQuestion;
+</script>
+
+</body>
+</html>
